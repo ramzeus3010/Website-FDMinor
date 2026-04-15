@@ -23,6 +23,8 @@ const memories = [
         preview: "I participated in a Game Jam for the first time and it was in Evanston!",
         description: "I am at the Comm Exchange now and I just came back home from the game jam. We have been working on this game for like 6 weeks and even though my coding skills are very low, thanks to AI I managed to help with the animation in the beginning and I made some 3D objects using Blender. I think it was nice cuz I made friends with similar interests and we, in my opinion, made the best game there (there were no prizes and awards this game jam except for t-shirts, but I am not complaining cuz damn I made a game). In any way, I also had an exposure to the game development community in Chicago and I liked it but also felt off because I am not super experienced yet. It's okay though, the guys in my team were also not super experience so all good.",
         images: [
+            { src: 'memory 6/image_2026-04-15_14-01-28.png', alt: 'Game Jam photo 1' },
+            { src: 'memory 6/image_2026-04-15_14-01-39.png', alt: 'Game Jam photo 2' },
             { src: 'memory 6/image_2026-04-15_14-02-36.png', alt: 'Eterna app interface' },
             { src: 'memory 6/image_2026-04-15_14-03-02.png', alt: 'Eterna dashboard' }
         ]
@@ -200,7 +202,7 @@ function updateLightboxGallery(memory) {
         // Trigger reflow to restart animation from the beginning
         void track.offsetWidth;
         // The speed is relative to the number of images to maintain constant visual speed
-        track.style.animation = `marquee-right ${count * 5}s linear infinite`;
+        track.style.animation = `marquee-right ${count * 12}s linear infinite`;
     }
 }
 
