@@ -601,6 +601,47 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
+/* ---------- Statement & Biography Sections ---------- */
+.statement-section,
+.biography-section {
+    margin-top: 80px;
+    padding: 48px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 2rem;
+    backdrop-filter: blur(12px);
+    position: relative;
+    transition: transform 0.4s var(--easing), box-shadow 0.4s var(--easing), border-color 0.4s var(--easing);
+}
+
+.statement-section:hover,
+.biography-section:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+    border-color: rgba(212, 169, 76, 0.2);
+}
+
+.statement-title {
+    font-size: 1.75rem;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: var(--text-main);
+}
+
+.statement-section p,
+.biography-section p {
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+.statement-section p:last-child,
+.biography-section p:last-child {
+    margin-bottom: 0;
+}
+
 .footer-content {
     display: flex;
     align-items: center;
