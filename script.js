@@ -179,7 +179,9 @@ function initLightbox() {
         const total = track.children.length;
         if (total > 1) {
             currentImageIndex = (currentImageIndex - 1 + total) % total;
-            track.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+            Array.from(track.children).forEach(slide => {
+                slide.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+            });
         }
     });
 
@@ -188,7 +190,9 @@ function initLightbox() {
         const total = track.children.length;
         if (total > 1) {
             currentImageIndex = (currentImageIndex + 1) % total;
-            track.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+            Array.from(track.children).forEach(slide => {
+                slide.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+            });
         }
     });
 
@@ -207,10 +211,14 @@ function initLightbox() {
             if (total > 1) {
                 if (e.key === 'ArrowLeft') {
                     currentImageIndex = (currentImageIndex - 1 + total) % total;
-                    track.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+                    Array.from(track.children).forEach(slide => {
+                        slide.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+                    });
                 } else if (e.key === 'ArrowRight') {
                     currentImageIndex = (currentImageIndex + 1) % total;
-                    track.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+                    Array.from(track.children).forEach(slide => {
+                        slide.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+                    });
                 }
             }
         }
