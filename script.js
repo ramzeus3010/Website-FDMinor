@@ -140,9 +140,10 @@ function initLightbox() {
     const lightboxTitle = document.getElementById('lightbox-title');
     const lightboxDate = document.getElementById('lightbox-date');
     const lightboxDescription = document.getElementById('lightbox-description');
-    const lightboxImage = document.getElementById('lightbox-image');
-    const lightboxThumbnails = document.getElementById('lightbox-thumbnails');
     const closeBtn = lightbox.querySelector('.lightbox-close');
+    const prevBtn = lightbox.querySelector('.prev-btn');
+    const nextBtn = lightbox.querySelector('.next-btn');
+    const track = document.getElementById('lightbox-track');
     const cards = document.querySelectorAll('.memory-card');
 
     cards.forEach(card => {
@@ -155,13 +156,41 @@ function initLightbox() {
                 lightboxDate.textContent = memory.date;
                 lightboxDescription.textContent = memory.description;
 
+                currentImageIndex = 0;
                 updateLightboxGallery(memory);
+                
+                if (memory.images && memory.images.length > 1) {
+                    prevBtn.style.display = 'flex';
+                    nextBtn.style.display = 'flex';
+                } else {
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                }
+
                 openLightbox(lightbox);
             }
         });
     });
 
     closeBtn.addEventListener('click', () => closeLightbox(lightbox));
+
+    prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const total = track.children.length;
+        if (total > 1) {
+            currentImageIndex = (currentImageIndex - 1 + total) % total;
+            track.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+        }
+    });
+
+    nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const total = track.children.length;
+        if (total > 1) {
+            currentImageIndex = (currentImageIndex + 1) % total;
+            track.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+        }
+    });
 
     lightbox.addEventListener('click', (e) => {
         if (e.target === lightbox) {
@@ -173,37 +202,35 @@ function initLightbox() {
         if (e.key === 'Escape' && lightbox.classList.contains('active')) {
             closeLightbox(lightbox);
         }
+        if (lightbox.classList.contains('active')) {
+            const total = track.children.length;
+            if (total > 1) {
+                if (e.key === 'ArrowLeft') {
+                    currentImageIndex = (currentImageIndex - 1 + total) % total;
+                    track.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+                } else if (e.key === 'ArrowRight') {
+                    currentImageIndex = (currentImageIndex + 1) % total;
+                    track.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+                }
+            }
+        }
     });
 }
 
 function updateLightboxGallery(memory) {
     const track = document.getElementById('lightbox-track');
     track.innerHTML = '';
-    track.style.animation = 'none';
+    track.style.transform = 'translateX(0)';
 
-    // Fallback if no images
     if (!memory.images || memory.images.length === 0) return;
 
-    const count = memory.images.length;
-    track.style.setProperty('--img-count', count);
-
-    // Duplicate images for infinite loop if more than 1
-    const displayImages = count > 1 ? [...memory.images, ...memory.images] : memory.images;
-
-    displayImages.forEach(img => {
+    memory.images.forEach(img => {
         const slide = document.createElement('img');
         slide.src = img.src;
         slide.alt = img.alt;
         slide.className = 'lightbox-slide';
         track.appendChild(slide);
     });
-
-    if (count > 1) {
-        // Trigger reflow to restart animation from the beginning
-        void track.offsetWidth;
-        // The speed is relative to the number of images to maintain constant visual speed
-        track.style.animation = `marquee-right ${count * 12}s linear infinite`;
-    }
 }
 
 function openLightbox(lightbox) {
